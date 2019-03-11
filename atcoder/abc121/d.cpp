@@ -10,28 +10,35 @@
 #define rep(i,n) for(int i=0;i<(n);i++)
 using namespace std;
 
+long A,B;
 
-long long A,B;
+long res(long in){
+  long ans = 0;
+  if(in == 1) return 1;
+  if(in % 2 == 0){
+    if( (in/2)%2 == 0){
+      ans = in^0;
+    }else{
+      ans = in^1;
+    }
+  }else{
+    if( ((in+1)/2)%2 == 0){
+      ans = 0;
+    }else{
+      ans = 1;
+    }
+  }
+  return ans;
+}
 
 int main(){
   cin>>A>>B;
-
-  long long res = A;
-
-  long long seven = 10000000;
-  if( ((A > seven) || (B > seven)) && (B-A)>10){
-    if( A > seven ) A -= seven;
-    if( B > seven ) B -= seven;
-    res = A;
-    for(long long i=A+1; i<=B-2;i++){
-      res = (res^i);
-    }
-    if( (B-A+1)%2 == 1 ) res += seven;
+  //cout<<res(A-1)<<endl;
+  //cout<<res(B)<<endl;
+  if(A == 0){
+    cout<<res(B)<<endl;
   }else{
-    for(long long i=A+1; i<=B;i++){
-      res = (res^i);
-    }
+    cout<< (res(A-1)^res(B)) << endl;
   }
 
-  cout<< (res) << endl;
 }
