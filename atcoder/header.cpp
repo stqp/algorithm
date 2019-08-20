@@ -8,6 +8,8 @@
 #include <iomanip>
 #include <map>
 #include <cstdlib>
+#include <queue>
+#include <stack>
 #define rep(i,n) for(int i=0;i<(n);i++)
 using namespace std;
 
