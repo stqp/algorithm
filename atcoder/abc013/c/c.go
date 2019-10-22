@@ -22,7 +22,6 @@ func main() {
 			if (H + B*x + D*y - (N-x-y)*E) > 0 {
 				if min > (x*A)+(y*C) {
 					min = (x * A) + (y * C)
-					fmt.Println(min, x, y)
 				}
 			}
 		}
