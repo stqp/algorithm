@@ -1,4 +1,6 @@
-import "fmt"
+package main
+
+import "sort"
 
 /*
  * @lc app=leetcode id=128 lang=golang
@@ -9,46 +11,28 @@ import "fmt"
 // @lc code=start
 func longestConsecutive(nums []int) int {
 
-	var minNum int
-	for _, num := range nums {
-		if num < minNum {
-			minNum = num
-		}
+	sort.Ints(nums)
+
+	if len(nums) == 0 {
+		return 0
 	}
 
-	intMax := 1<<28 - 1
-	xs := make([]bool, intMax)
-	for _, num := range nums {
-		num += (-1) * minNum
-		xs[num] = true
-	}
-
-	max := 0
-	c := 0
-	nowSequence := false
-	fmt.Println(xs[0:10])
-	for _, x := range xs {
-		if nowSequence == false {
-			if x == true {
-				nowSequence = true
-				c++
-			} else {
-				// do nothing.
-			}
+	seqMax := 1
+	count := 1
+	for i := 0; i < len(nums)-1; i++ {
+		if nums[i] == nums[i+1] {
+			continue
+		} else if nums[i]+1 == nums[i+1] {
+			count++
 		} else {
-			if x == true {
-				c++
-			} else {
-				nowSequence = false
-				if max < c {
-					max = c
-				}
-				c = 0
-			}
+			count = 1
+		}
+		if count > seqMax {
+			seqMax = count
 		}
 	}
-	return max
+	return seqMax
+
 }
 
 // @lc code=end
-
