@@ -5,70 +5,71 @@
  */
 
 // @lc code=start
-var found map[string]bool
 
-var minLen int
-var maxLen int
-
-var lenX int
-var lenY int
-
-var b [][]byte
-var ws []string
-var cand []string
+var ans []string
 
 func findWords(board [][]byte, words []string) []string {
-	found = make(map[string]bool)
-	b = board
-	ws = words
-
-	for y := 0; y < len(b); y++ {
-		for x := 0; x < len(b[y]); x++ {
-			find(x, y, "")
-		}
-	}
-
-	var ans []string
-	for _, w := range words {
-		if _, ok := found[w]; ok {
-			ans = append(ans, w)
+	ans = []string{}
+	root := buildTrie(words)
+	for i := 0; i < len(board); i++ {
+		for j := 0; j < len(board[0]); j++ {
+			dfs(board, i, j, root)
 		}
 	}
 	return ans
 }
 
-func find(x int, y int, str string) {
+func dfs(board [][]byte, i int, j int, p *TrieNode) {
+	c := board[i][j]
 
-	dx := []int{-1, 0, 1, 0}
-	dy := []int{0, -1, 0, 1}
-
-	if minLen > len(str) || len(str) > maxLen {
+	if c == '#' || p.next[c] == nil {
 		return
 	}
+	p = p.next[c]
 
-	found[str] = true
-
-	for i := 0; i < 4; i++ {
-		nx := x + dx[i]
-		ny := y + dy[i]
-		if 0 <= nx && nx < lenX && 0 <= ny && ny < lenY {
-			find(nx, ny, str+string(b[ny][nx]))
-		}
+	if p.word != "" {
+		ans = append(ans, p.word)
+		p.word = ""
 	}
+
+	board[i][j] = '#'
+	if i > 0 {
+		dfs(board, i-1, j, p)
+	}
+	if j > 0 {
+		dfs(board, i, j-1, p)
+	}
+	if i < len(board)-1 {
+		dfs(board, i+1, j, p)
+	}
+	if j < len(board[0])-1 {
+		dfs(board, i, j+1, p)
+	}
+	board[i][j] = c
 }
 
-func setMinMax() {
-	minLen = (1<<31 - 1)
-	maxLen = 0
+type TrieNode struct {
+	next map[byte]*TrieNode
+	word string
+}
 
-	for i := 0; i < len(ws); i++ {
-		if minLen > len(ws) {
-			minLen = len(ws)
+func buildTrie(words []string) *TrieNode {
+	m0 := make(map[byte]*TrieNode)
+	root := &TrieNode{next: m0}
+
+	for _, w := range words {
+		p := root
+		for _, v := range w {
+			c := byte(v)
+			if p.next[c] == nil {
+				m := make(map[byte]*TrieNode)
+				p.next[c] = &TrieNode{next: m}
+			}
+			p = p.next[c]
 		}
-		if maxLen < len(ws) {
-			maxLen = len(ws)
-		}
+		p.word = w
 	}
+	return root
 }
 
 // @lc code=end
