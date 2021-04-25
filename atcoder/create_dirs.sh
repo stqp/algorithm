@@ -1,7 +1,7 @@
 
-for i in {10..24}
+for i in {175..198}
 do 
-	dire="abc0"$i;
+	dire="abc"$i;
 	mkdir $dire;
 	cd $dire;
 	mkdir a b c d;
