@@ -52,5 +52,6 @@
         "map": "cpp",
         "set": "cpp",
         "span": "cpp"
-    }
+    },
+    "editor.formatOnSave": true,
 }
