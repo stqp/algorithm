@@ -15,7 +15,11 @@
 using namespace std;
 
 int main() {
-    int a = 10;
+    int a;
 
-    cout << bitset<8>(a) << endl;
+    a = 10; cout << a << " -> " << bitset<16>(a) << endl;
+    a = 12; cout << a << " -> " << bitset<16>(a) << endl;
+    a = 14; cout << a << " -> " << bitset<16>(a) << endl;
+    a = 16; cout << a << " -> " << bitset<16>(a) << endl;
+
 }
