@@ -8,18 +8,17 @@
 #include <queue>
 #include <map>
 using namespace std;
+#define rep(i, l, r) for(int i = l; i < (int)(r); i++)
 
 int main(){
-    srand((unsigned) time(NULL));
-    
     int N = 10;
     int c[100];
-    for (int i=0; i<N; i++) c[i] = rand()%100;
+    for (int i=0; i<N; i++) c[i] = i*2;
     
-    sort(c, c+N);
-    int x = 50;
-    cout << "bound : " << x << endl;
-    cout << "lower : " << lower_bound(c, c+N, x) -c << endl;
-    for (int i=0; i<N; i++) cout << c[i] << endl;
+    rep(i,0,N) cout << c[i] << " " ;
+    cout << endl;
 
+    int key = 5;
+    cout << "lower_bound: " << lower_bound(c, c+N, key) - c << endl;
+    cout << "upper_bound: " << upper_bound(c, c+N, key) - c << endl;
 }
