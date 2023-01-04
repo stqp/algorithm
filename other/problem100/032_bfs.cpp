@@ -17,7 +17,10 @@ using namespace std;
 #define lb long double
 #define rep(i, l, r) for (ll i = l; i < (ll)(r); i++)
 #define repe(i, l, r) for (ll i = l; i <= (ll)(r); i++)
+// clang-format off
 
 int main()
 {
+    ll W,H;
+    cin>>W>>H;
 }
