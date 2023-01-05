@@ -51,7 +51,8 @@
         "initializer_list": "cpp",
         "map": "cpp",
         "set": "cpp",
-        "span": "cpp"
+        "span": "cpp",
+        "iostream": "cpp"
     },
     "editor.formatOnSave": true,
 }
