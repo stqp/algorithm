@@ -20,19 +20,34 @@ using namespace std;
 ll INF (1LL<<62);
 // clang-format off
 
-ll dp[100];
-ll dps(ll x){
-    if (dp[x] != INF) return dp[x];
-    dp[x] = dps(x-1) + dps(x-2);
-    return dp[x];
-}
+int main() {
+    ll dp[100];
 
-int main()
-{
-    ll n;
-    cin>>n;
-    rep(i,0,100) dp[i] = INF;
+    // fibonacci N 番目までの値
+    ll N; cin>>N;
+
     dp[0] = 1;
     dp[1] = 1;
-    cout << dps(n) << endl; 
+    repe(n,2,N) {
+        dp[n] = dp[n-1] + dp[n-2];
+    }
+    cout << dp[N] << endl;
 }
+
+
+// ll dp[100];
+// ll dps(ll x){
+//     if (dp[x] != INF) return dp[x];
+//     dp[x] = dps(x-1) + dps(x-2);
+//     return dp[x];
+// }
+
+// int main()
+// {
+//     ll n;
+//     cin>>n;
+//     rep(i,0,100) dp[i] = INF;
+//     dp[0] = 1;
+//     dp[1] = 1;
+//     cout << dps(n) << endl; 
+// }

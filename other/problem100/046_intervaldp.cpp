@@ -20,27 +20,25 @@ using namespace std;
 #define repe(i, l, r) for (ll i = l; i <= (ll)(r); i++)
 ll INF = (1LL<<62);
 
-ll c[110];
-ll dp[110][40]; // i 番目までの数を + - して x を作れる組み合わせの最大数。
+ll dp[200][200] = {0};
+ll N;
+ll M[200];
 
 int main()
 {
-    ll N; cin>>N;
-    rep(i,0,N) cin>>c[i];
-
-    repe(i,0,N)repe(j,0,21) dp[i][j] = 0;
-    dp[0][c[0]] = 1;
-
-    rep(n,0,N) {
-        repe(i,0,20) {
-            if (i-c[n+1] >= 0) {
-                dp[n+1][i] += dp[n][i-c[n+1]];
-            }
-            if (i+c[n+1] <= 20){
-                dp[n+1][i] += dp[n][i+c[n+1]];
+    cin>>N;
+    rep(i,0,N) {
+        cin>>M[i]>>M[i+1];
+    }
+    repe(n,2,N){
+        repe(l,0,N-n) {
+            ll r = l+n;
+            dp[l][r] = INF;
+            repe(i,l,r) {
+                dp[l][r] = min(dp[l][r], dp[l][i] +  M[l]*M[i]*M[r] + dp[i][r]);
             }
         }
     }
 
-    cout << dp[N-2][c[N-1]] << endl;
+    cout << dp[0][N] << endl;
 }
