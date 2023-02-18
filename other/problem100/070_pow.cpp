@@ -18,26 +18,17 @@ using namespace std;
 #define lb long double
 #define rep(i, l, r) for (ll i = l; i < (ll)(r); i++)
 #define repe(i, l, r) for (ll i = l; i <= (ll)(r); i++)
+ll INF = (1LL<<62);
 
-ll INF = (1LL << 62);
-
-ll N;
-ll C[4 * 10000];
-ll dp[4 * 10000];
+ll quick_pow(ll m, ll n, ll mod){
+  if (n == 0) return 1;
+  if (n % 2 == 1) return m * quick_pow(m, n-1, mod) % mod;
+  if (n % 2 == 0) return quick_pow( (m*m) % mod, n/2, mod);
+  return -1;
+}
 
 int main() {
-    cin >> N;
-    rep(i, 0, N) cin >> C[i];
-    rep(i, 0, N) dp[i] = INF;
-
-    dp[0] = C[0];
-    rep(i, 1, N) {
-        ll l = lower_bound(dp, dp + (i + 1), C[i]) - dp;
-        if (l == (i + 1)) dp[l - 1] = C[i];
-        else dp[l] = C[i];
-    }
-
-    ll ans = 0;
-    rep(i, 0, N) if (dp[i] != INF) ans = max(ans, i + 1);
-    cout << (N - ans) << endl;
+  ll M,N; cin>>M>>N;
+  ll MOD = 1000000007;
+  cout << quick_pow(M,N,MOD) << endl;
 }
