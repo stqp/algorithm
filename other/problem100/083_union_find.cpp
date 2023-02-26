@@ -10,39 +10,21 @@
 #include <map>
 #include <set>
 #include <string>
+#include <regex>
 #include <tuple>
 #include <cassert>
 #include <bitset>
 using namespace std;
 #define ll long long
 #define lb long double
+#define us unsigned short
 #define rep(i, l, r) for (ll i = l; i < (ll)(r); i++)
 #define repe(i, l, r) for (ll i = l; i <= (ll)(r); i++)
 ll INF = (1LL<<62);
-ll MOD = 1000000007;
+ll MOD = 1000*100;
 
-const static ll N = 1000 * 1000 * 5;
-ll dp[N];
-
-// 階乗 % MOD
-void mod_factorial(ll x, ll mod){ 
-    dp[0] = 1;
-    dp[1] = 1;
-    rep(i,1,x) {
-        dp[i+1] = ((i+1) * dp[i]) % mod;
-    }
-}
-
-// m ^ n % MOD
-ll mod_pow(ll m, ll n, ll mod){
-    if (n == 0) return 1;
-    if (n % 2 == 1) return (m * mod_pow(m, n-1, mod)) % mod;
-    if (n % 2 == 0) {
-        ll d = mod_pow(m, n/2, mod);
-        return (d * d) % mod;
-    }
-    return -1;
-}
+const static ll MAX_DP = 10*1000*1000;
+ll dp[MAX_DP];
 
 struct UnionFind {
   vector<int> par;
@@ -77,3 +59,18 @@ struct UnionFind {
     return sizes[find(x)];
   }
 };
+
+int main() {
+  ll N; cin>>N;
+  ll Q; cin>>Q;
+
+  UnionFind uf(N);
+
+  ll C, X, Y;
+  rep(i,0,Q){
+    cin >> C >> X >> Y;
+    if (C == 0) uf.unite(X,Y);
+    if (C == 1) cout << (uf.same(X,Y) ? 1 : 0) << endl;
+  }
+
+}
