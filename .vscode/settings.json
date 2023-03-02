@@ -52,7 +52,9 @@
         "map": "cpp",
         "set": "cpp",
         "span": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "xstring": "cpp",
+        "xtree": "cpp"
     },
     "editor.formatOnSave": true,
 }
