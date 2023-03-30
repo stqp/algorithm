@@ -25,57 +25,38 @@ ll MOD = 998244353;
 
 const ll _N = 2*100000 + 10;
 
-struct Edge {
-    set<Edge*> pres;
-    set<Edge*> nxts;
-    ll v = -1;
-};
-
-Edge topo[_N];
-
-
-// 解けてない。
 int main() {
     ll N,M; cin>>N>>M;
-    bool ok = true;
+    
+    vector<vector<ll>> G(N);
+    vector<ll> deg(N);
 
-    repe(i,1,M) {
-        ll x,y;
-        cin >>x>>y;
-        topo[x].nxts.insert(&topo[y]);
-        topo[y].pres.insert(&topo[x]);
+    ll x,y;
+    rep(m,0,M) {
+        cin>>x>>y;
+        x--;y--;
+        G[x].push_back(y);
+        deg[y]++;
     }
 
-    ll root = -1;
-    repe(i,1,N) {
-        if (topo[i].pres.size() == 0) root = i;
-    }
+    vector<ll> L(N);
+    vector<ll> S;
+    ll cnt = 0;
 
-    Edge *e = &topo[root];
+    rep(i,0,N) if (deg[i] == 0) S.push_back(i);
 
-    repe(i,1,N) {
-        if (e == NULL) break;
-
-        if (i == 1) {
-            if (e->pres.size() != 0 || e->nxts.size() != 1) ok = false;
-        } else if (i == N) { 
-            if (e->pres.size() != 1 || e->nxts.size() != 0) ok = false;
-        } else {
-            if (e->pres.size() != 1 || e->nxts.size() != 1) ok = false;
+    while (S.size() > 0) {
+        if (S.size() != 1) {
+            cout << "No" << endl;
+            return 0;
         }
- 
-        e->v = i;
-        if (i < N) e = *(e->nxts.begin());
-    }
-
-    repe(i,1,N) if (topo[i].v == -1) ok = false;
-
-    if (!ok) {
-        cout << "No" << endl;
-        return 0;
+        ll v = S.back(); S.pop_back();
+        L[v] = ++cnt;
+        for(ll vv: G[v]) if (!--deg[vv]) S.push_back(vv);
     }
 
     cout << "Yes" << endl;
-    repe(i,1,N-1) cout << topo[i].v << " ";
-    cout << topo[N].v << endl;
+    rep(n,0,N-1) cout << L[n] << " ";
+    cout << L[N-1] << endl;
 }
+
